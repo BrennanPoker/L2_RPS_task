@@ -142,6 +142,7 @@ while rounds_played < num_rounds:
 
     if user_choice == "xxx":
         break
+
     # randomly choose from the rps list (Excluding the exit code)
     comp_choice = random.choice(rps_list[:-1])
     print("Computer choice", comp_choice)
@@ -159,9 +160,10 @@ while rounds_played < num_rounds:
         feedback = "👍👍 You Win! 👍👍"
 
     # Set up round feedback and output it user
+
     # Add it to the game history list (include the round number)
     round_feedback = f"{user_choice} vs {comp_choice}, {feedback} "
-    history_item = f"Round: {rounds_played} - {round_feedback}"
+    history_item = f"Round: {rounds_played + 1} - {round_feedback}"
 
     print(round_feedback)
     game_history.append(history_item)
@@ -172,34 +174,41 @@ while rounds_played < num_rounds:
     if mode == "infinite":
         num_rounds += 1
 
-# Game loop ends here
+    # Game loop ends here
 
-# Game History / Statistics area
+    # Game History / Statistics area
 
-# calculate statistics
-rounds_won = rounds_played - rounds_tied - rounds_lost
-percent_won = rounds_won / rounds_played * 100
-percent_lost = rounds_lost / rounds_played * 100
-percent_tied = 100 - percent_won - percent_lost
+if rounds_played > 0:
+    # calculate statistics
+    rounds_won = rounds_played - rounds_tied - rounds_lost
+    percent_won = rounds_won / rounds_played * 100
+    percent_lost = rounds_lost / rounds_played * 100
+    percent_tied = 100 - percent_won - percent_lost
 
-# Output Game Statistics
-print("\n📊📊📊 Game Statistics 📊📊📊")
-print(f"👍 Won: {percent_won:.2f} \t"
-      f"😭 Lost: {percent_lost:.2f} \t"
-      f"👔 Tied: {percent_tied:.2f}")
+    # Output Game Statistics
+    print("\n📊📊📊 Game Statistics 📊📊📊")
+    print(f"👍 Won: {percent_won:.2f} \t"
+          f"😭 Lost: {percent_lost:.2f} \t"
+          f"👔 Tied: {percent_tied:.2f}")
 
-# Generate round results and add it to the game history list
-history_item = f"Round: {rounds_played + 1} - {round_feedback}, {feedback}"
+    # Generate round results and add it to the game history list
+    history_item = f"Round: {rounds_played + 1} - {round_feedback}, {feedback}"
 
-# Asks if they want game history
-want_history = input("\nDo you want to see your game history? ")
-want_history = want_history.lower()
+    # Asks if they want game history
+    while True:
+        ask_history = string_checker("\nDo you want game history? ")
 
-if want_history == "yes":
-    for item in game_history:
-        print(item)
-if want_history == "y":
-    for item in game_history:
-        print(item)
+        ask_history = ask_history.lower()
 
-print("\n🖥️ Thank you for playing RPS with me! 🖥️")
+        if ask_history == "yes":
+            for item in game_history:
+                print(item)
+            break
+
+        elif ask_history == "no":
+            break
+
+    print("\n🖥️ Thank you for playing RPS with me! 🖥️")
+
+else:
+    print("🐔🐔🐔 Oops - You chickened out! 🐔🐔🐔")
